@@ -9,7 +9,8 @@ storage:
 webserver:
   image:
     repository: index.docker.io/lmwcode/lmw-fitness-frontend
-    tag: v.<+pipeline.sequenceId>
+    # tag: v.<+pipeline.sequenceId>
+    tag: <+serviceVariables.tag>
   port: 5052
   type: NodePort
   host: www.lmwfitness.co.uk

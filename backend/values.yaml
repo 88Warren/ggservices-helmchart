@@ -12,8 +12,8 @@ storage:
 api:
   image:
     repository: index.docker.io/lmwcode/lmw-fitness-backend
-    tag: v.<+pipeline.sequenceId>
-    # tag: v.160
+    # tag: v.<+pipeline.sequenceId>
+    tag: v.<+pipeline.sequenceId>k
   host: api.lmwfitness.co.uk
   port: 8082
   path: /api/
