@@ -1,6 +1,6 @@
-namespace: lmw-fitness
+namespace: ggservices
 env: production
-allowedOrigin: https://www.lmwfitness.co.uk,https://lmwfitness.co.uk
+allowedOrigin: https://www.glynsgardeningservices.com,https://glynsgardeningservices.com
 replicaCount: 1
 image:
   pullPolicy: Always
@@ -8,33 +8,33 @@ storage:
   storageClass: standard
 webserver:
   image:
-    repository: index.docker.io/lmwcode/lmw-fitness-frontend
+    repository: index.docker.io/lmwcode/ggservices-frontend
     # tag: v.<+pipeline.sequenceId>
     # tag: <+serviceVariables.tag>
-    tag: v1.3.7
+    tag: v1.0.0
   port: 5052
   type: NodePort
-  host: www.lmwfitness.co.uk
+  host: www.glynsgardeningservices.com
   path: /
   pathType: Prefix
   recaptcha: 6Ldn3-0qAAAAAMWv4iekZdMl4Xrfj2Av2zEL7onD
-  backendUrl: "https://api.lmwfitness.co.uk"
+  backendUrl: "https://api.glynsgardeningservices.com"
   applicationType: frontend
 api:
-  host: api.lmwfitness.co.uk
-  port: 8082
+  host: api.glynsgardeningservices.com
+  port: 8091
   path: /api/
   pathType: Prefix
   applicationType: backend
 
 # blue
-backendServiceHost: lmwfitness-backend-service # Blue frontend (k get svc lmwfitness-frontend-service -n lmw-fitness -o yaml. Selector = colour)
+backendServiceHost: ggservices-backend-service # Blue frontend (k get svc lmwcode-frontend-service -n lmwcode -o yaml. Selector = colour)
 
 # green
-# backendServiceHost: lmwfitness-backend-service-stage # Green frontend
+# backendServiceHost: ggservices-backend-service-stage # Green frontend
 
 # switch colour
-# k patch svc lmwfitness-frontend-service -n lmw-fitness -p '{"spec":{"selector":{"harness.io/color":"green"}}}'
+# k patch svc ggservices-frontend-service -n lmwcode -p '{"spec":{"selector":{"harness.io/color":"green"}}}'
 # if caching delete ingress k -n ingress-nginx delete pod -l app.kubernetes.io/name=ingress-nginx
 livenessProbe:
   endpoint: /api/health/live

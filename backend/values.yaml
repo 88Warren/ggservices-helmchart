@@ -1,8 +1,8 @@
-namespace: lmw-fitness
+namespace: ggservices
 env: production
-allowedOrigin: https://www.lmwfitness.co.uk
+allowedOrigin: https://www.glynsgardeningservices.com
 allowCredentials: false
-frontend_url: https://www.lmwfitness.co.uk
+frontend_url: https://www.glynsgardeningservices.com
 replicaCount: 1
 platform: linux/amd64
 image:
@@ -11,12 +11,12 @@ storage:
   storageClass: standard
 api:
   image:
-    repository: index.docker.io/lmwcode/lmw-fitness-backend
+    repository: index.docker.io/lmwcode/ggservices-backend
     # tag: v.<+pipeline.sequenceId>
     # tag: <+serviceVariables.tag>
-    tag: v1.2.2
-  host: api.lmwfitness.co.uk
-  port: 8082
+    tag: v1.0.0
+  host: api.glynsgardeningservices.com
+  port: 8091
   path: /api/
   type: ClusterIP
   protocol: TCP
@@ -24,41 +24,13 @@ api:
   applicationType: backend
 images:
   directory: images
-database:
-  name: lmwfitness
-  user: lmwcode
-  port: 5432
-  type: ClusterIP
-  protocol: TCP
-  sslMode: disable
-  host: 217.154.57.170
 webserver:
-  host: www.lmwfitness.co.uk
+  host: www.glynsgardeningservices.com
 smtp:
-  host: smtp.ionos.co.uk
-  port: 587
-  username: info@lmwfitness.co.uk
-  from: info@lmwfitness.co.uk
-  to: info@lmwfitness.co.uk
-brevo:
-  apiURL: https://api.brevo.com/v3
-  newsletter:
-    listID: 15
-    DOItemplateID: 2
-    DOIRedirectURL: https://www.lmwfitness.co.uk/newsletter/confirm
-  lists:
-    mindset: 17
-    beginner: 10
-    advanced: 12
-    tailoredCoaching: 14
-  templates:
-    mindsetPackage: 8
-    beginnerProgram: 6
-    advancedProgram: 7
-    tailoredCoaching: 9
-    orderConfirmation: 10
+  from: noreply@glynsgardeningservices.com
+  to: g.g.services@outlook.com
 admin:
-  email: info@lmwfitness.co.uk
+  email: info@lmwcode.co.uk
 seedUser:
   email: warren_laura@yahoo.co.uk
 livenessProbe:
