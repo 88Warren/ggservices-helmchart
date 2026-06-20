@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/name: {{ .Values.webserver.applicationType }}
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}-deployment
+    meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -20,8 +20,8 @@ spec:
   template:
     metadata:
       labels:
-        app: frontend
-        app.kubernetes.io/instance: lmwcode-frontend
+        app: {{ .Values.webserver.applicationType }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
       - name: {{ .Values.webserver.applicationType }}
@@ -40,7 +40,7 @@ spec:
             cpu: "250m"
         readinessProbe:
           httpGet:
-            path: {{ .Values.webserver.path }}
+            path: {{ .Values.readinessProbe.endpoint }}
             port: {{ .Values.webserver.port }}
           initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
@@ -49,7 +49,7 @@ spec:
           successThreshold: {{ .Values.readinessProbe.successThreshold }}
         livenessProbe:
           httpGet:
-            path: {{ .Values.webserver.path }}
+            path: {{ .Values.livenessProbe.endpoint }}
             port: {{ .Values.webserver.port }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}

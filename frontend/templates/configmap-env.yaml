@@ -3,6 +3,11 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-runtime-configmap
   namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Values.namespace }}
 data:
   VITE_BACKEND_URL: {{ .Values.webserver.backendUrl }}
   VITE_RECAPTCHA_SITE_KEY: {{ .Values.webserver.recaptcha }}

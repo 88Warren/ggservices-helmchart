@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/name: {{ .Values.api.applicationType }}
   annotations:
-    meta.helm.sh/release-name: {{ .Release.Name }}-deployment
+    meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}

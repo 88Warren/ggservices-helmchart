@@ -3,6 +3,11 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
   namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Values.namespace }}
 data:
   GO_ENV: "{{ .Values.env }}"
   ALLOWED_ORIGIN: "{{ .Values.allowedOrigin }}"

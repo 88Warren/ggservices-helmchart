@@ -1,6 +1,6 @@
 namespace: ggservices
 env: production
-allowedOrigin: https://www.glynsgardeningservices.com
+allowedOrigin: "https://www.glynsgardeningservices.com,https://glynsgardeningservices.com"
 allowCredentials: false
 frontend_url: https://www.glynsgardeningservices.com
 replicaCount: 1
