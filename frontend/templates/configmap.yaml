@@ -18,6 +18,10 @@ data:
         include       /etc/nginx/mime.types;
         default_type  application/octet-stream;
 
+        # kube-dns resolver — required for nginx to resolve cluster service names at runtime
+        resolver 10.96.0.10 valid=30s ipv6=off;
+        resolver_timeout 5s;
+
         location / {
           root /usr/share/nginx/html;
           index index.html;
@@ -32,18 +36,18 @@ data:
         }
 
         location /api/ {
-          proxy_pass https://{{ .Values.backendServiceHost }}:{{ .Values.api.port }}/api/;
+          proxy_pass http://{{ .Values.backendServiceHost }}:{{ .Values.api.port }}/api/;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
-      
+
           # Add CORS headers
           add_header 'Access-Control-Allow-Origin' '{{ .Values.allowedOrigin }}' always;
           add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
           add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
           add_header 'Access-Control-Allow-Credentials' 'true' always;
-          
+
           if ($request_method = 'OPTIONS') {
               add_header 'Access-Control-Allow-Origin' '{{ .Values.allowedOrigin }}' always;
               add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
@@ -53,25 +57,18 @@ data:
               add_header 'Content-Length' '0';
               return 204;
           }
-
-          # Error handling
-          proxy_intercept_errors on;
-          error_page 502 503 504 /50x.html;
         }
 
         location /images/ {
-          proxy_pass https://{{ .Values.backendServiceHost }}:{{ .Values.api.port }}/images/;
+          proxy_pass http://{{ .Values.backendServiceHost }}:{{ .Values.api.port }}/images/;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
-
-          # Error handling
-          proxy_intercept_errors on;
-          error_page 404 /404.html;
         }
+
         location /debug/images {
-          proxy_pass https://{{ .Values.backendServiceHost }}:{{ .Values.api.port }}/debug/images;
+          proxy_pass http://{{ .Values.backendServiceHost }}:{{ .Values.api.port }}/debug/images;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -47,3 +47,11 @@ readinessProbe:
   periodSeconds: 120
   failureThreshold: 3
   successThreshold: 1
+
+# Override these at deploy time — never commit real values
+# helm upgrade ggservices-backend ./backend -n ggservices \
+#   --set secrets.resendApiKey=re_xxx \
+#   --set secrets.recaptchaSecret=6Lxxx
+secrets:
+  resendApiKey: ""
+  recaptchaSecret: ""
