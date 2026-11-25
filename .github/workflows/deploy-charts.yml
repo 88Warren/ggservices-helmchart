@@ -122,11 +122,11 @@ jobs:
             set -euo pipefail
 
             echo "── Syncing chart repo ──────────────────────────────"
-            if [ -d "${{ env.CHART_DIR }}/.git" ]; then
+            if git -C "${{ env.CHART_DIR }}" rev-parse --git-dir > /dev/null 2>&1; then
               git -C "${{ env.CHART_DIR }}" fetch --prune origin
               git -C "${{ env.CHART_DIR }}" reset --hard origin/main
             else
-              echo "Chart dir is not a git clone — cloning fresh"
+              echo "Chart dir missing or not a git clone — cloning fresh"
               rm -rf "${{ env.CHART_DIR }}.incoming"
               git clone "${{ env.REPO_URL }}" "${{ env.CHART_DIR }}.incoming"
               # Preserve the local secrets file across a reclone
