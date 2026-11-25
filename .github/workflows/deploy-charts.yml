@@ -24,7 +24,7 @@ on:
 env:
   CHART_DIR:  /opt/ggservices/ggservices-helmcharts
   NAMESPACE:  ggservices
-  REPO_URL:   git@github.com:88Warren/ggservices-helmcharts.git
+  REPO_URL:   https://github.com/88Warren/ggservices-helmcharts.git
 
 concurrency:
   group: helm-deploy
